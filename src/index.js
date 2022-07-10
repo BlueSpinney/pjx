@@ -11,7 +11,6 @@ let n
 let p = "    Link"
 let p2 = "    Name"
 
-// React.createElement('a', {key : "0",href : "https://www.youtube.com/"}, 'Hi')
 document.body.style = 'background: black;';
 
 
