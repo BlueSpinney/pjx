@@ -16,8 +16,12 @@ let p3 = "    Description"
 let p4 = "    price"
 let products = {}
 let price
+let tdict = {}
 
 let state = false
+
+
+
 
 document.body.style = 'background: black;';
 class InaneCarinae extends React.PureComponent {
@@ -30,65 +34,27 @@ class InaneCarinae extends React.PureComponent {
     }
 }
 
-class SearchBar extends React.PureComponent {
-    constructor(props) {
-        super(props)
-        this.state = {querry : ''}
-
-
+class Sorted extends React.Component {
+    listify = (dict) => {
+        let ks = Object.keys(dict)
+        alert(ks.length)
+        let llst
+        for (let i = 0; i < ks.length; i++){
+            alert(i)
+            llst.push(dict[ks[i]])
+        }
+        alert(llst)
+        return llst
     }
-    
-
-    Orderlst(desc){
-        let ftitle = []
-        if (desc === false){
-            ftitle = title.reverse()
-        }
-        else{
-            ftitle = title
-        }
-        let templst = []
-        let thedict = {}
-        let key
-        let keylst = []
-        let i = -0
-        let I = 0
-        alert(Math.ceil(ftitle.length / 3))
-        while (true){
-            if (i < Math.ceil(ftitle.length / 3)){
-            templst.push(ftitle[I + 2])
-            templst.push(ftitle[I + 1])
-            templst.push(ftitle[I + 3])
-            
-            key = ftitle[I + 1]
-            keylst.push(ftitle[I + 1])
-            
-            thedict[key] = templst
-            alert(keylst);
-            templst = []
-            i++
-            I += 3
-            }
-            else{
-                break;
-            }
-
-
-        }
-        alert(keylst.sort());
-        return ftitle;
-    }
-    render(){
-        return(
+    render() {
+        return (
             <div>
-                <div>
-                    <button onClick={() => root.render(<Base/>)}>return To Base </button>
-                </div>
-                {this.Orderlst(true)}
+                {this.listify(this.props.dlst)}
             </div>
         );
     }
 }
+
 
 class NameForm extends React.Component {
     constructor(props) {
@@ -144,9 +110,25 @@ class NameForm extends React.Component {
 
         ]
     }
-    
-  
+    sdi = (di) => {
+
+        let sdict = {}
+        
+        var keys = Object.keys(di); 
+        keys.sort(function(a, b){return b-a});
+        
+        
+        for (var i=0; i<keys.length; i++) { 
+            var key = keys[i];
+            var value = di[key];
+
+            sdict[key] = value
+        } 
+        return sdict;
+    }   
+
     handleSubmit(event) {
+
         
         l = this.state.value
         n = this.state.value2
@@ -154,9 +136,11 @@ class NameForm extends React.Component {
         price = this.state.value4
         const len = title.length
         this.createSubsite(len,dscr,l)
-        title.push(React.createElement('button', {key : title.length,onClick: () =>this.renderthis(len),description : dscr}, n))
-        title.push(price)
-        title.push(React.createElement('p', {key : title.length},""))
+        let nlst = [React.createElement('button', {key : title.length,onClick: () =>this.renderthis(len),description : dscr}, n),price,React.createElement('p', {key : title.length},"")]
+        tdict[nlst[1]] = nlst
+        tdict = this.sdi(tdict)
+        alert(Object.keys(tdict))
+        title.push(nlst)
         event.preventDefault();
         state = !state
         root.render(<Base/>)
@@ -192,14 +176,20 @@ class Base extends React.Component{
         state = !state
         root.render(<Base/>)
     }
+    SO = () => {
+        root.render(<Sorted
+            dlst = {tdict}
+        />)
+    }
 
     render() {
         if (state === false){
             return(
                 <div>
                     <div>
-                        <button onClick={() => root.render(<SearchBar/>)}>order itmes </button>
+                        <button onClick={() => this.SO()}>sorted list</button>
                         <button onClick={() => this.OC()}>add new item        </button>
+
                     </div>
                     <br></br>
                     <br></br>
