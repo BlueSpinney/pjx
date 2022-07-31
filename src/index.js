@@ -23,7 +23,7 @@ let state = false
 
 
 
-document.body.style = 'background: black;';
+document.body.style = 'background: #23272e';
 class InaneCarinae extends React.PureComponent {
     render() {
         return (
@@ -34,16 +34,38 @@ class InaneCarinae extends React.PureComponent {
     }
 }
 
+class Search extends React.PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {value : ''}
+    }
+
+    handleChange = (event) => {
+        this.setState({value: event.target.value});
+    }
+    handleSubmit = (event) => {
+        alert(this.state.value)
+    }
+
+    render() {
+        return(
+            <form onSubmit={this.handleSubmit}>
+                <input style = {{"width":"1750px","backgroundColor":"#23272e","borderColor":"rgb(100, 100, 100)","color" : "gray"}}type="text" value={this.state.value} onChange={this.handleChange} />
+                <input type="submit" value="Create" style = {{"width":"101px","backgroundColor" : "#23272e","color" : "white","borderColor" : "rgb(184, 184, 184);" }}/>
+            </form>
+
+        );
+    }
+
+}
+
 class Sorted extends React.Component {
     listify = (dict) => {
         let ks = Object.keys(dict)
-        alert(ks.length)
-        let llst
+        let llst = []
         for (let i = 0; i < ks.length; i++){
-            alert(i)
             llst.push(dict[ks[i]])
         }
-        alert(llst)
         return llst
     }
     render() {
@@ -139,7 +161,6 @@ class NameForm extends React.Component {
         let nlst = [React.createElement('button', {key : title.length,onClick: () =>this.renderthis(len),description : dscr}, n),price,React.createElement('p', {key : title.length},"")]
         tdict[nlst[1]] = nlst
         tdict = this.sdi(tdict)
-        alert(Object.keys(tdict))
         title.push(nlst)
         event.preventDefault();
         state = !state
@@ -150,21 +171,21 @@ class NameForm extends React.Component {
       return (
         <form onSubmit={this.handleSubmit}>
           <label style={{"color" : "white","fontFamily": "Arial, Helvetica, sans-serif"}}>
-            <input style = {{"backgroundColor":"black","color" : "white"}}type="text" value={this.state.value} onChange={this.handleChange} />
+            <input style = {{"backgroundColor":"#23272e","borderColor":"rgb(100, 100, 100)","color" : "gray"}}type="text" value={this.state.value} onChange={this.handleChange} />
             {p}
             <div></div>
-            <input style = {{"backgroundColor":"black","color" : "white"}}type="text" value={this.state.value2} onChange={this.handleChange2} />
+            <input style = {{"backgroundColor":"#23272e","borderColor":"rgb(100, 100, 100)","color" : "gray"}}type="text" value={this.state.value2} onChange={this.handleChange2} />
             {p2}
             <div></div>
-            <input style = {{"backgroundColor":"black","color" : "white"}}type="text" value={this.state.value3} onChange={this.handleChange3} />
+            <input style = {{"backgroundColor":"#23272e","borderColor":"rgb(100, 100, 100)","color" : "gray"}}type="text" value={this.state.value3} onChange={this.handleChange3} />
             {p3}
             <div></div>
-            <input style = {{"backgroundColor":"black","color" : "white"}}type="text" value={this.state.value4} onChange={this.handleChange4} />
+            <input style = {{"backgroundColor":"#23272e","borderColor":"rgb(100, 100, 100)","color" : "gray"}}type="text" value={this.state.value4} onChange={this.handleChange4} />
             {p4}
                         
           </label>
           <div></div>
-          <input type="submit" value="Create" style = {{"width":"101px","backgroundColor" : "rgb(30, 30, 30)","color" : "white","borderColor" : "rgb(0, 195, 255)" }}/>
+          <input type="submit" value="Create" style = {{"width":"101px","backgroundColor" : "#23272e","color" : "white","borderColor" : "rgb(184, 184, 184);" }}/>
         </form>
       );
     }
@@ -186,6 +207,10 @@ class Base extends React.Component{
         if (state === false){
             return(
                 <div>
+                    <div>
+                        {<Search/>}
+                    </div>
+                    <br></br>
                     <div>
                         <button onClick={() => this.SO()}>sorted list</button>
                         <button onClick={() => this.OC()}>add new item        </button>
