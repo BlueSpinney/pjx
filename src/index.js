@@ -17,6 +17,9 @@ let p4 = "    price"
 let products = {}
 let price
 let tdict = {}
+let tags = ["hi mom"]
+
+let lstq = []
 
 let state = false
 
@@ -34,6 +37,16 @@ class InaneCarinae extends React.PureComponent {
     }
 }
 
+class Result extends React.PureComponent{
+    render(){
+        return(
+            <div>
+                {this.props.res}
+            </div>
+        );
+    }
+}
+
 class Search extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -43,14 +56,60 @@ class Search extends React.PureComponent {
     handleChange = (event) => {
         this.setState({value: event.target.value});
     }
-    handleSubmit = (event) => {
-        alert(this.state.value)
+    querry = (event) => {
+        let q =this.state.value
+        let k = Object.keys(tdict)
+        let renlst = []
+        let hq;
+
+        for (let i = 0;i<k.length;i++){
+            if (q === tdict[k[i]][0][1] || q ===  tdict[k[i]][1]){
+                renlst.push(tdict[k[i]][0])
+            }
+            for (let x = 0;x < tdict[k[i]][2].length;x++){
+                tags = tdict[k[i]][2]
+                tags = tags[x]
+                hq = q.length/2
+                tags = tags.split('');
+                let rt = 0;
+                let bool= false
+                lstq =  q.split('');
+                alert(lstq)
+                alert(tags)
+                for (let y =0;y<lstq.length;y++){
+                    alert(tags[y])
+                    alert(lstq[y])
+                    if (lstq[y] === tags[y]){
+                        alert("hi")
+                        bool = true;
+                        
+                        rt++;
+                        if (rt > hq){
+                            renlst.push(tdict[k[i]][0])
+                            break
+                        }
+                    }
+                    else if (bool === true){
+                        break
+                    }
+                    else{
+                        continue
+                    }
+                }
+
+            }
+        }
+        alert(renlst)
+        root.render(<Result 
+            res = {renlst}
+        />)
+
     }
 
     render() {
         return(
-            <form onSubmit={this.handleSubmit}>
-                <input style = {{"width":"1750px","backgroundColor":"#23272e","borderColor":"rgb(100, 100, 100)","color" : "gray"}}type="text" value={this.state.value} onChange={this.handleChange} />
+            <form onSubmit={this.querry}>
+                <input style = {{"width":"1400px","backgroundColor":"#23272e","borderColor":"rgb(100, 100, 100)","color" : "gray"}}type="text" value={this.state.value} onChange={this.handleChange} />
                 <input type="submit" value="Create" style = {{"width":"101px","backgroundColor" : "#23272e","color" : "white","borderColor" : "rgb(184, 184, 184);" }}/>
             </form>
 
@@ -159,7 +218,7 @@ class NameForm extends React.Component {
         const len = title.length
         this.createSubsite(len,dscr,l)
         let nlst = [React.createElement('button', {key : title.length,onClick: () =>this.renderthis(len),description : dscr}, n),price,React.createElement('p', {key : title.length},"")]
-        tdict[nlst[1]] = nlst
+        tdict[nlst[1]] = [nlst,n,tags]
         tdict = this.sdi(tdict)
         title.push(nlst)
         event.preventDefault();
