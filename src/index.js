@@ -7,16 +7,13 @@ import logo from './logo.png'
 import axios from 'axios';
 import flagg from './flagg_inv.png'
 
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase, ref, set,child, get,onValue ,remove,push} from "firebase/database";
 
-// TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
   apiKey: "AIzaSyBcPHKfkZVTAu3Vx0vuqNnpbZZpd2ON1yE",
   authDomain: "pjx-v2.firebaseapp.com",
